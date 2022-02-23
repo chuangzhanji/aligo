@@ -56,7 +56,8 @@ class Auth:
             name: str = 'aligo',
             show: Callable[[str], NoReturn] = None,
             level=logging.DEBUG,
-            loglog: bool = False
+            loglog: bool = False,
+            proxies: Dict = None
     ):
         """扫描二维码登录"""
 
@@ -66,7 +67,8 @@ class Auth:
             name: str = 'aligo',
             refresh_token: str = None,
             level=logging.DEBUG,
-            loglog: bool = False
+            loglog: bool = False,
+            proxies: Dict = None
     ):
         """refresh_token 登录"""
 
@@ -75,7 +77,8 @@ class Auth:
             refresh_token: str = None,
             show: Callable[[str], NoReturn] = None,
             level: int = logging.DEBUG,
-            loglog: bool = False
+            loglog: bool = False,
+            proxies: Dict = None
     ):
         """登录验证
 
@@ -115,6 +118,8 @@ class Auth:
 
         #
         self.session = requests.session()
+        self.session.trust_env = False
+        self.session.proxies = proxies
         self.session.params.update(UNI_PARAMS)  # type:ignore
         self.session.headers.update(UNI_HEADERS)
 
